@@ -1,0 +1,158 @@
+//NAYARA PEREIRA SOARES CB3030717
+
+public class Main {
+    public static void main(String[] args) {
+        ConsultaAgendada p1 = new ConsultaAgendada(10, 30, 0, 29, 6, 2025, "Maria", "Dr. Silva");
+
+        System.out.println("Consulta p1:");
+        System.out.println("Data: " + p1.getData());
+        System.out.println("Hora: " + p1.getHora());
+        System.out.println("Paciente: " + p1.getNomePaciente());
+        System.out.println("Médico: " + p1.getNomeMedico());
+
+        ConsultaAgendada p2 = new ConsultaAgendada();
+
+        System.out.println("\nConsulta p2 (inicial):");
+        System.out.println("Data: null");
+        System.out.println("Hora: null");
+        System.out.println("Paciente: null");
+        System.out.println("Médico: null");
+
+        p1.setData(1, 1, 2026);
+        p1.setHora(14, 15, 0);
+        p1.setNomePaciente("João");
+        p1.setNomeMedico("Dra. Souza");
+
+        System.out.println("\nConsulta p1 (atualizada):");
+        System.out.println("Data: " + p1.getData());
+        System.out.println("Hora: " + p1.getHora());
+        System.out.println("Paciente: " + p1.getNomePaciente());
+        System.out.println("Médico: " + p1.getNomeMedico());
+
+        System.out.println("\nQuantidade total de consultas: " + ConsultaAgendada.getAmostra());
+    }
+}
+
+class Data {
+    private int dia;
+    private int mes;
+    private int ano;
+
+    public Data() {}
+
+    public Data(int dia, int mes, int ano) {
+        this.dia = dia;
+        this.mes = mes;
+        this.ano = ano;
+    }
+
+    public void setDia(int dia) {
+        this.dia = dia;
+    }
+
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
+
+    public void setAno(int ano) {
+        this.ano = ano;
+    }
+
+    public int getDia() {
+        return dia;
+    }
+
+    public int getMes() {
+        return mes;
+    }
+
+    public int getAno() {
+        return ano;
+    }
+
+    public String getData() {
+        return String.format("%02d/%02d/%02d", dia, mes, ano);
+    }
+}
+
+class Hora {
+    private int hora;
+    private int minuto;
+    private int segundo;
+
+    public Hora() {}
+
+    public Hora(int h, int m, int s) {
+        this.hora = h;
+        this.minuto = m;
+        this.segundo = s;
+    }
+
+    public String getHora() {
+        return String.format("%02d:%02d:%02d", hora, minuto, segundo);
+    }
+}
+
+class ConsultaAgendada {
+    private Data data;
+    private Hora hora;
+    private String nomePaciente;
+    private static int quantidade = 0;
+    private String nomeMedico;
+
+    public ConsultaAgendada() {
+        quantidade++;
+    }
+
+    public ConsultaAgendada(int h, int mi, int s, int d, int m, int a, String p, String mdc) {
+        this.hora = new Hora(h, mi, s);
+        this.data = new Data(d, m, a);
+        this.nomePaciente = p;
+        this.nomeMedico = mdc;
+        quantidade++;
+    }
+
+    public ConsultaAgendada(Data d, Hora h, String p, String mdc) {
+        this.data = d;
+        this.hora = h;
+        this.nomePaciente = p;
+        this.nomeMedico = mdc;
+        quantidade++;
+    }
+
+    public void setData(int d, int m, int a) {
+        this.data = new Data(d, m, a);
+    }
+
+    public void setHora(int h, int m, int s) {
+        this.hora = new Hora(h, m, s);
+    }
+
+    public void setNomePaciente(String p) {
+        this.nomePaciente = p;
+    }
+
+    public void setNomeMedico(String m) {
+        this.nomeMedico = m;
+    }
+
+    public String getData() {
+        return data.getData();
+    }
+
+    public String getHora() {
+        return hora.getHora();
+    }
+
+    public String getNomePaciente() {
+        return nomePaciente;
+    }
+
+    public String getNomeMedico() {
+        return nomeMedico;
+    }
+
+    public static int getAmostra() {
+        return quantidade;
+    }
+}
