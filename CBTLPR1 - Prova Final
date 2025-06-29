@@ -1,5 +1,8 @@
 //NAYARA PEREIRA SOARES CB3030717
 
+import java.time.LocalDate;
+import java.util.Calendar;
+
 public class Main {
     public static void main(String[] args) {
         ConsultaAgendada p1 = new ConsultaAgendada(10, 30, 0, 29, 6, 2025, "Maria", "Dr. Silva");
@@ -40,38 +43,48 @@ class Data {
 
     public Data() {}
 
-    public Data(int dia, int mes, int ano) {
-        this.dia = dia;
-        this.mes = mes;
-        this.ano = ano;
+    public Data(int d, int m, int a) {
+        dia = d;
+        mes = m;
+        ano = a;
     }
 
-    public void setDia(int dia) {
-        this.dia = dia;
+    public void entraDia(int d) { dia = d; }
+    public void entraMes(int m) { mes = m; }
+    public void entraAno(int a) { ano = a; }
+
+    public int retDia() { return dia; }
+    public int retMes() { return mes; }
+    public int retAno() { return ano; }
+
+    public String mostra1() {
+        return String.format("%02d/%02d/%04d", dia, mes, ano);
     }
 
-    public void setMes(int mes) {
-        this.mes = mes;
+    public String mostra2() {
+        return String.format("%02d-%02d-%04d", ano, mes, dia);
     }
 
-    public void setAno(int ano) {
-        this.ano = ano;
+    public boolean bissexto() {
+        return (ano % 4 == 0 && ano % 100 != 0) || (ano % 400 == 0);
     }
 
-    public int getDia() {
-        return dia;
+    public int diasTranscorridos() {
+        Calendar inicio = Calendar.getInstance();
+        inicio.set(ano, Calendar.JANUARY, 1);
+        Calendar atual = Calendar.getInstance();
+        atual.set(ano, mes - 1, dia);
+        long millis = atual.getTimeInMillis() - inicio.getTimeInMillis();
+        return (int) (millis / (1000 * 60 * 60 * 24));
     }
 
-    public int getMes() {
-        return mes;
-    }
-
-    public int getAno() {
-        return ano;
+    public void apresentaDataAtual() {
+        LocalDate hoje = LocalDate.now();
+        System.out.println("Data atual: " + hoje);
     }
 
     public String getData() {
-        return String.format("%02d/%02d/%02d", dia, mes, ano);
+        return mostra1();
     }
 }
 
@@ -83,13 +96,33 @@ class Hora {
     public Hora() {}
 
     public Hora(int h, int m, int s) {
-        this.hora = h;
-        this.minuto = m;
-        this.segundo = s;
+        hora = h;
+        minuto = m;
+        segundo = s;
+    }
+
+    public void setHor(int h) { hora = h; }
+    public void setMin(int m) { minuto = m; }
+    public void setSeg(int s) { segundo = s; }
+
+    public int getHor() { return hora; }
+    public int getMin() { return minuto; }
+    public int getSeg() { return segundo; }
+
+    public String getHora1() {
+        return String.format("%02d:%02d:%02d", hora, minuto, segundo);
+    }
+
+    public String getHora2() {
+        return String.format("%02d:%02d", hora, minuto);
+    }
+
+    public int getSegundos() {
+        return hora * 3600 + minuto * 60 + segundo;
     }
 
     public String getHora() {
-        return String.format("%02d:%02d:%02d", hora, minuto, segundo);
+        return getHora1();
     }
 }
 
@@ -105,43 +138,43 @@ class ConsultaAgendada {
     }
 
     public ConsultaAgendada(int h, int mi, int s, int d, int m, int a, String p, String mdc) {
-        this.hora = new Hora(h, mi, s);
-        this.data = new Data(d, m, a);
-        this.nomePaciente = p;
-        this.nomeMedico = mdc;
+        hora = new Hora(h, mi, s);
+        data = new Data(d, m, a);
+        nomePaciente = p;
+        nomeMedico = mdc;
         quantidade++;
     }
 
     public ConsultaAgendada(Data d, Hora h, String p, String mdc) {
-        this.data = d;
-        this.hora = h;
-        this.nomePaciente = p;
-        this.nomeMedico = mdc;
+        data = d;
+        hora = h;
+        nomePaciente = p;
+        nomeMedico = mdc;
         quantidade++;
     }
 
     public void setData(int d, int m, int a) {
-        this.data = new Data(d, m, a);
+        data = new Data(d, m, a);
     }
 
     public void setHora(int h, int m, int s) {
-        this.hora = new Hora(h, m, s);
+        hora = new Hora(h, m, s);
     }
 
     public void setNomePaciente(String p) {
-        this.nomePaciente = p;
+        nomePaciente = p;
     }
 
     public void setNomeMedico(String m) {
-        this.nomeMedico = m;
+        nomeMedico = m;
     }
 
     public String getData() {
-        return data.getData();
+        return data != null ? data.getData() : "null";
     }
 
     public String getHora() {
-        return hora.getHora();
+        return hora != null ? hora.getHora() : "null";
     }
 
     public String getNomePaciente() {
